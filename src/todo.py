@@ -122,3 +122,14 @@ class TodoList:
         :return: True if the index is valid, False otherwise.
         """
         return 0 <= index < len(self.todos)
+
+    def find_task(self, keyword: str) -> List[Dict[str, Any]]:
+        """
+        Find tasks containing a specific keyword.
+
+        :param keyword: The keyword to search for in tasks.
+        :return: A list of tasks that contain the keyword.
+        """
+        if not keyword.strip():
+            raise ValueError("Keyword cannot be empty.")
+        return [task for task in self.todos if keyword.strip().lower() in task["task"].lower()]
