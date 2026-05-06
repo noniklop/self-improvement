@@ -2,7 +2,7 @@ import os
 import json
 import subprocess
 from pathlib import Path
-from openai import OpenAI  # GitHub Models використовує OpenAI-сумісний SDK
+from openai import OpenAI 
 
 client = OpenAI(
     base_url="https://models.inference.ai.azure.com",
@@ -10,7 +10,6 @@ client = OpenAI(
 )
 
 def read_files():
-    """Читає всі .py файли з репо"""
     files = {}
     for path in Path(".").rglob("*.py"):
         if ".git" in str(path) or "improve.py" in str(path):
@@ -19,7 +18,6 @@ def read_files():
     return files
 
 def ask_llm_to_improve(files: dict) -> dict:
-    """Просить модель покращити код і повернути змінені файли"""
 
     files_content = "\n\n".join(
         f"### FILE: {name}\n```python\n{content}\n```"
@@ -63,12 +61,11 @@ Return only files you actually changed. Return valid JSON only, no markdown."""
     )
 
     response_text = response.choices[0].message.content
-    # прибираємо markdown якщо модель все ж додала
+    
     response_text = response_text.strip().removeprefix("```json").removesuffix("```").strip()
     return json.loads(response_text)
 
 def apply_changes(result: dict):
-    """Записує змінені файли на диск"""
     for change in result["changes"]:
         path = Path(change["file"])
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -76,7 +73,6 @@ def apply_changes(result: dict):
         print(f"✅ Updated: {change['file']}")
 
 def git_commit(summary: str):
-    """Комітить зміни в репо"""
     subprocess.run(["git", "config", "user.email", "ai-agent@self-improvement.bot"])
     subprocess.run(["git", "config", "user.name", "AI Improvement Agent"])
     subprocess.run(["git", "add", "-A"])
