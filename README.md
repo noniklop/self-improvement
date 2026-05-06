@@ -1,42 +1,38 @@
 # 🤖 Self-Improving Repository
 
-A Python Todo application that automatically improves itself every 2 hours using AI (GitHub Models / GPT-4o).
+A Python Todo application that automatically improves itself every 2 hours using AI,
+with tests running on an ephemeral Hetzner VPS via a secure Tailscale tunnel.
 
 ## How It Works
 
-Every 2 hours, a GitHub Actions workflow:
-1. Reads all Python files in the repository
-2. Sends them to GPT-4o via GitHub Models API
-3. AI suggests improvements (type hints, docstrings, error handling, new features)
-4. Changes are committed automatically
-5. Tests run to verify nothing is broken
+### Part 1 — AI Self-Improvement (every 2 hours)
+1. GitHub Actions triggers the AI agent
+2. Agent reads all Python files in the repository
+3. Sends them to GPT-4o via GitHub Models API
+4. AI suggests improvements (type hints, docstrings, error handling, new features)
+5. Changes are committed automatically to main
+
+### Part 2 — Testing on Ephemeral Hetzner VPS
+1. Triggered automatically after AI improvement workflow
+2. Script creates a Hetzner VPS (cx22, ~2.99€/month)
+3. VPS connects to private network via Tailscale (no public SSH)
+4. GitHub Actions self-hosted runner starts on the VPS
+5. Tests run on the VPS
+6. VPS is deleted immediately after tests finish
 
 ## Setup
 
-### Prerequisites
-- Public GitHub repository
-- Personal Access Token (PAT) with no special scopes
+### Required Secrets
+Add these in **Repo Settings → Secrets and variables → Actions**:
 
-### Configuration
-1. Create a PAT: **GitHub Settings → Developer settings → Personal access tokens → Generate new token**
-2. Add it to repository secrets: **Repo Settings → Secrets and variables → Actions → New secret**
-   - Name: `MODELS_TOKEN`
-   - Value: your PAT
+| Secret | Description |
+|---|---|
+| `MODELS_TOKEN` | GitHub Personal Access Token for GitHub Models API |
+| `HETZNER_API_TOKEN` | Hetzner Cloud API token (Read & Write) |
+| `TAILSCALE_AUTH_KEY` | Tailscale auth key (Reusable + Ephemeral) |
 
-### Run Manually
-Go to **Actions → AI Self-Improvement → Run workflow**
-
-## Tech Stack
-
-- **Language:** Python 3.11
-- **AI Model:** GPT-4o
+### Infrastructure
+- **AI Model:** GPT-4o via GitHub Models
+- **VPS:** Hetzner cx23 — deleted after each test run
+- **Tunnel:** Tailscale — no public SSH access to the VPS
 - **CI/CD:** GitHub Actions
-- **Testing:** pytest
-
-## Example AI Improvements
-
-Each automated commit improves the codebase incrementally:
-- Adding type hints and docstrings
-- Better error handling and input validation
-- New helper methods and features
-- Additional test coverage
