@@ -59,7 +59,7 @@ RESPONSE=$(curl -s -X POST \
   "https://api.hetzner.cloud/v1/servers" \
   -d "{
     \"name\": \"github-runner-$(date +%s)\",
-    \"server_type\": \"cx22\",
+    \"server_type\": \"cx23\",
     \"image\": \"ubuntu-24.04\",
     \"location\": \"nbg1\",
     \"user_data\": $(echo "$CLOUD_INIT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))')
