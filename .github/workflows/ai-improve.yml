@@ -3,15 +3,15 @@ name: AI Self-Improvement
 on:
   schedule:
     - cron: '0 */2 * * *'
-  workflow_dispatch:        
+  workflow_dispatch:
 
 jobs:
   improve:
     runs-on: ubuntu-latest
-    
+
     permissions:
-      contents: write 
-    
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,11 +24,11 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install anthropic
+        run: pip install openai
 
       - name: Run AI improvement agent
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # вбудований, нічого не треба створювати!
         run: python improve.py
 
       - name: Run tests after improvement
