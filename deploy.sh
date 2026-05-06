@@ -62,7 +62,7 @@ RESPONSE=$(curl -s -X POST \
     \"server_type\": \"cx22\",
     \"image\": \"ubuntu-24.04\",
     \"location\": \"nbg1\",
-    \"user_data\": $(echo "$CLOUD_INIT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))'),
+    \"user_data\": $(echo "$CLOUD_INIT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))')
   }")
 
 echo "Hetzner response: $RESPONSE"
