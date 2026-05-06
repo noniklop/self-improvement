@@ -63,11 +63,9 @@ RESPONSE=$(curl -s -X POST \
     \"image\": \"ubuntu-24.04\",
     \"location\": \"nbg1\",
     \"user_data\": $(echo "$CLOUD_INIT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))'),
-    \"public_net\": {
-      \"enable_ipv4\": false,
-      \"enable_ipv6\": false
-    }
   }")
+
+echo "Hetzner response: $RESPONSE"
 
 SERVER_ID=$(echo $RESPONSE | python3 -c "import sys,json; print(json.load(sys.stdin)['server']['id'])")
 
