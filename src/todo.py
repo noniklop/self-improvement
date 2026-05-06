@@ -42,7 +42,7 @@ class TodoList:
 
         :return: A list of tasks with their completion status.
         """
-        return self.todos
+        return self.todos.copy()
 
     def delete(self, index: int) -> None:
         """
@@ -61,7 +61,7 @@ class TodoList:
 
         :return: A list of completed tasks.
         """
-        return [task for task in self.todos if task["done"]]
+        return [task.copy() for task in self.todos if task["done"]]
 
     def get_pending(self) -> List[Dict[str, Any]]:
         """
@@ -69,7 +69,7 @@ class TodoList:
 
         :return: A list of pending tasks.
         """
-        return [task for task in self.todos if not task["done"]]
+        return [task.copy() for task in self.todos if not task["done"]]
 
     def update(self, index: int, new_task: str) -> None:
         """
@@ -112,7 +112,7 @@ class TodoList:
         """
         if not self._is_valid_index(index):
             return None
-        return self.todos[index]
+        return self.todos[index].copy()
 
     def _is_valid_index(self, index: int) -> bool:
         """
@@ -129,7 +129,8 @@ class TodoList:
 
         :param keyword: The keyword to search for in tasks.
         :return: A list of tasks that contain the keyword.
+        :raises ValueError: If the keyword is empty or only whitespace.
         """
         if not keyword.strip():
             raise ValueError("Keyword cannot be empty.")
-        return [task for task in self.todos if keyword.strip().lower() in task["task"].lower()]
+        return [task.copy() for task in self.todos if keyword.strip().lower() in task["task"].lower()]
