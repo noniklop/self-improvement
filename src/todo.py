@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 class TodoList:
     """
@@ -31,9 +31,9 @@ class TodoList:
         :raises ValueError: If the task is already completed.
         """
         if not self._is_valid_index(index):
-            raise IndexError("Task index out of range.")
+            raise IndexError(f"Task index {index} is out of range.")
         if self.todos[index]["done"]:
-            raise ValueError("Task is already completed.")
+            raise ValueError(f"Task at index {index} is already completed.")
         self.todos[index]["done"] = True
 
     def get_all(self) -> List[Dict[str, Any]]:
@@ -52,7 +52,7 @@ class TodoList:
         :raises IndexError: If the index is out of range.
         """
         if not self._is_valid_index(index):
-            raise IndexError("Task index out of range.")
+            raise IndexError(f"Task index {index} is out of range.")
         self.todos.pop(index)
 
     def get_completed(self) -> List[Dict[str, Any]]:
@@ -81,7 +81,7 @@ class TodoList:
         :raises ValueError: If the new task description is empty or only whitespace.
         """
         if not self._is_valid_index(index):
-            raise IndexError("Task index out of range.")
+            raise IndexError(f"Task index {index} is out of range.")
         if not new_task.strip():
             raise ValueError("Task description cannot be empty.")
         self.todos[index]["task"] = new_task.strip()
@@ -102,6 +102,17 @@ class TodoList:
         completed = len(self.get_completed())
         pending = len(self.get_pending())
         return {"total": total, "completed": completed, "pending": pending}
+
+    def get_task(self, index: int) -> Optional[Dict[str, Any]]:
+        """
+        Retrieve a task by its index.
+
+        :param index: The index of the task to retrieve.
+        :return: The task as a dictionary, or None if the index is out of range.
+        """
+        if not self._is_valid_index(index):
+            return None
+        return self.todos[index]
 
     def _is_valid_index(self, index: int) -> bool:
         """

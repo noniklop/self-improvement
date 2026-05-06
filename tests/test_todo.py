@@ -54,3 +54,26 @@ def test_get_pending_tasks():
     assert len(pending) == 1
     assert pending[0]["task"] == "Clean room"
     assert pending[0]["done"] == False
+
+def test_get_task():
+    todo = TodoList()
+    todo.add("Buy milk")
+    task = todo.get_task(0)
+    assert task is not None
+    assert task["task"] == "Buy milk"
+    assert task["done"] == False
+
+def test_get_task_out_of_range():
+    todo = TodoList()
+    assert todo.get_task(0) is None
+
+def test_clear_completed():
+    todo = TodoList()
+    todo.add("Buy milk")
+    todo.add("Clean room")
+    todo.complete(0)
+    todo.clear_completed()
+    tasks = todo.get_all()
+    assert len(tasks) == 1
+    assert tasks[0]["task"] == "Clean room"
+    assert tasks[0]["done"] == False
