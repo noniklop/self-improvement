@@ -38,6 +38,9 @@ Your task:
 - Keep or improve existing tests, add new ones if needed
 - Do NOT break existing functionality
 - Make meaningful but focused changes — not everything at once
+- CRITICAL: After your changes, ALL existing tests MUST still pass
+- CRITICAL: Do NOT change error message text in src/todo.py if tests depend on them
+- CRITICAL: Do NOT remove or rename existing methods
 
 Respond ONLY with a JSON object in this exact format:
 {{
