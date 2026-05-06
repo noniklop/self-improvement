@@ -28,9 +28,12 @@ class TodoList:
 
         :param index: The index of the task to mark as completed.
         :raises IndexError: If the index is out of range.
+        :raises ValueError: If the task is already completed.
         """
         if not self._is_valid_index(index):
             raise IndexError("Task index out of range.")
+        if self.todos[index]["done"]:
+            raise ValueError("Task is already completed.")
         self.todos[index]["done"] = True
 
     def get_all(self) -> List[Dict[str, Any]]:
@@ -88,6 +91,17 @@ class TodoList:
         Remove all completed tasks from the to-do list.
         """
         self.todos = [task for task in self.todos if not task["done"]]
+
+    def count_tasks(self) -> Dict[str, int]:
+        """
+        Count the total, completed, and pending tasks.
+
+        :return: A dictionary with the counts of total, completed, and pending tasks.
+        """
+        total = len(self.todos)
+        completed = len(self.get_completed())
+        pending = len(self.get_pending())
+        return {"total": total, "completed": completed, "pending": pending}
 
     def _is_valid_index(self, index: int) -> bool:
         """
