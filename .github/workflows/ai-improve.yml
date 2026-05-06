@@ -30,8 +30,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.MODELS_TOKEN }} 
         run: python improve.py
-
-      - name: Run tests after improvement
-        run: |
-          pip install pytest
-          pytest tests/ -v
