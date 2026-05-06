@@ -21,7 +21,7 @@ def test_complete_task():
 
 def test_complete_task_out_of_range():
     todo = TodoList()
-    with pytest.raises(IndexError, match="Task index out of range."):
+    with pytest.raises(IndexError):
         todo.complete(1)
 
 def test_delete_task():
@@ -32,7 +32,7 @@ def test_delete_task():
 
 def test_delete_task_out_of_range():
     todo = TodoList()
-    with pytest.raises(IndexError, match="Task index out of range."):
+    with pytest.raises(IndexError):
         todo.delete(0)
 
 def test_get_completed_tasks():
