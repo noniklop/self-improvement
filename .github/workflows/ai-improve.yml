@@ -28,7 +28,7 @@ jobs:
 
       - name: Run AI improvement agent
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # вбудований, нічого не треба створювати!
+          GITHUB_TOKEN: ${{ secrets.MODELS_TOKEN }} 
         run: python improve.py
 
       - name: Run tests after improvement
