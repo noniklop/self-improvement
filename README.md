@@ -14,7 +14,7 @@ with tests running on an ephemeral Hetzner VPS via a secure Tailscale tunnel.
 
 ### Part 2 — Testing on Ephemeral Hetzner VPS
 1. Triggered automatically after AI improvement workflow
-2. Script creates a Hetzner VPS (cx22, ~2.99€/month)
+2. Script creates a Hetzner VPS
 3. VPS connects to private network via Tailscale (no public SSH)
 4. GitHub Actions self-hosted runner starts on the VPS
 5. Tests run on the VPS
