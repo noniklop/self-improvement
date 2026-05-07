@@ -155,3 +155,11 @@ class TodoList:
         """
         for index in sorted(indices, reverse=True):
             self.delete(index)
+
+    def is_all_completed(self) -> bool:
+        """
+        Check if all tasks in the to-do list are completed.
+
+        :return: True if all tasks are completed, False otherwise.
+        """
+        return all(task["done"] for task in self.todos)
