@@ -1,10 +1,6 @@
 name: Run Tests on Hetzner
 
 on:
-  workflow_run:
-    workflows: ["AI Self-Improvement"]
-    types:
-      - completed
   workflow_dispatch:
 
 jobs:
