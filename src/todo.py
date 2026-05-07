@@ -134,3 +134,24 @@ class TodoList:
         if not keyword.strip():
             raise ValueError("Keyword cannot be empty.")
         return [task.copy() for task in self.todos if keyword.strip().lower() in task["task"].lower()]
+
+    def bulk_complete(self, indices: List[int]) -> None:
+        """
+        Mark multiple tasks as completed by their indices.
+
+        :param indices: A list of indices of tasks to mark as completed.
+        :raises IndexError: If any index is out of range.
+        :raises ValueError: If any task is already completed.
+        """
+        for index in indices:
+            self.complete(index)
+
+    def bulk_delete(self, indices: List[int]) -> None:
+        """
+        Delete multiple tasks by their indices.
+
+        :param indices: A list of indices of tasks to delete.
+        :raises IndexError: If any index is invalid.
+        """
+        for index in sorted(indices, reverse=True):
+            self.delete(index)
